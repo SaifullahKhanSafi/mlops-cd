@@ -12,9 +12,21 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
+
+            - name: Get version
+              id: version
+              run: |
+                VERSION=${GITHUB_REF_NAME#v}
+                echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            - name: Show version
+              run: |
+                echo "Building version ${{ steps.version.outputs.version }}"
 
             - name: Setup Python
               uses: actions/setup-python@v5

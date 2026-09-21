@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Python Virtual Environments
+.venv
+venv/
+env/
+
+# Python Cache and Compiled Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment Variables & Secrets
+.env
+.env.*
+
+# Testing Frameworks
+tests/
+.pytest_cache/
+.coverage
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# Build Artifacts
+build/
+dist/
+*.egg-info/

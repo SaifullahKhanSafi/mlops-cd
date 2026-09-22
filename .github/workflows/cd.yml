@@ -42,7 +42,7 @@ jobs:
             - name: Get Version
               id: version
               run: |
-                VERSION = VERSION=${GITHUB_REF_NAME#v}
+                VERSION =${GITHUB_REF_NAME#v}
                 echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Login GHCR

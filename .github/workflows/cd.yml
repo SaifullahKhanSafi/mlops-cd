@@ -52,13 +52,20 @@ jobs:
                 username: ${{github.actor}}
                 password: ${{secrets.GITHUB_TOKEN}}
 
-            - name: Build
+            - name: Build, Tag, and Push Docker Image
               run: |
-                 docker build -t ghcr.io/${{github.repository}}:${{steps.version.outputs.version}} -t ghcr.io/${{github.repository}}:latest .
-
-            - name: Push
-              run: |
-                docker push ghcr.io/${{github.repository}}:${{steps.version.outputs.version}}
-                docker push ghcr.io/${{github.repository}}:latest
+                # 1. Force the repository name to lowercase
+                REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+                IMAGE_ID=ghcr.io/$REPO
+                
+                # 2. Grab the clean version number (e.g., 1.0.0)
+                VERSION=${{ steps.version.outputs.version }}
+                
+                # 3. Build and tag using the lowercase IMAGE_ID
+                docker build -t $IMAGE_ID:$VERSION -t $IMAGE_ID:latest .
+                
+                # 4. Push both tags to GHCR
+                docker push $IMAGE_ID:$VERSION
+                docker push $IMAGE_ID:latest
 
      
